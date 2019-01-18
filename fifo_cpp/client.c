@@ -29,6 +29,12 @@ int main(int argc, char **argv)
 
 	if (mkfifo(my_fifo_name, 0664) == -1) perror("mkfifo");
 
+	int it = 0;
+	int a = 0;
+	for (it = 0; it < 1000; it++) {
+		a = a + 1;
+	}
+
 	while (1) {
 		// get user input
 		printf("Type numbers to be added: ");
