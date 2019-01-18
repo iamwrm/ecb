@@ -1,4 +1,4 @@
-all: client.c server.c
-	gcc server.c -o add_server
-	gcc client.c -o add_client
+all: client.cpp server.cpp
+	g++ -std=c++11 server.cpp -o add_server
+	g++ -std=c++11 client.cpp -o add_client
 

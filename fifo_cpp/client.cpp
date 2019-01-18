@@ -4,16 +4,8 @@
 		   and receive server's response
 
  */
-#include <errno.h>
-#include <error.h>
-#include <fcntl.h>
-#include <memory.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
+
+#include "handy.h"
 
 #define SERVER_FIFO "/tmp/addition_fifo_server"
 
@@ -37,14 +29,15 @@ int main(int argc, char **argv)
 
 	while (1) {
 		// get user input
-		printf("Type numbers to be added: ");
-		if (fgets(buf1, sizeof(buf1), stdin) == NULL) break;
 
-		strcpy(buf2, my_fifo_name);
-		strcat(buf2, " ");
-		strcat(buf2, buf1);
+		strcpy(buf2, "123");
 
 		// send message to server
+
+		// unsigned long time_in_micros = GetTimeStamp();
+		// printf("%ld", time_in_micros);
+
+		cout_time_nano();
 
 		if ((fd_server = open(SERVER_FIFO, O_WRONLY)) == -1) {
 			perror("open: server fifo");
@@ -61,19 +54,6 @@ int main(int argc, char **argv)
 			break;
 		}
 
-		// read the answer
-		if ((fd = open(my_fifo_name, O_RDONLY)) == -1) perror("open");
-		memset(buf2, '\0', sizeof(buf2));
-		if ((bytes_read = read(fd, buf2, sizeof(buf2))) == -1)
-			perror("read");
-
-		if (bytes_read > 0) {
-			printf("Answer: %s\n", buf2);
-		}
-
-		if (close(fd) == -1) {
-			perror("close");
-			break;
-		}
+		break;
 	}
 }
